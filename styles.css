@@ -1,0 +1,72 @@
+/* Dark Theme Base Styles */
+body {
+    background-color: #111827;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Message Board Styles */
+#message-board {
+    background-color: #1f2937;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+}
+
+/* Admin Panel Styles */
+#login-form, #message-panel {
+    background-color: #1f2937;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+/* Form Elements */
+input, textarea, button {
+    background-color: #374151;
+    color: white;
+    border: 1px solid #4b5563;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+}
+
+/* Links */
+a {
+    color: #60a5fa;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Cybersecurity Corner Elements */
+@keyframes binaryScroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+
+.binary-animation {
+    animation: binaryScroll 10s linear infinite;
+    font-family: 'Courier New', monospace;
+}
+
+.circuit-pattern {
+    font-family: monospace;
+    line-height: 0.8;
+}
+
+/* Poetry Section Styles */
+.poetry-item {
+    border-left: 3px solid #10b981;
+    transition: all 0.3s ease;
+}
+
+.poetry-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.1);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    background-color: #1f2937;
+}

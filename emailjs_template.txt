@@ -1,0 +1,19 @@
+Template Name: Portfolio Contact Form
+Subject: New message from {{from_name}}
+
+Email Body:
+---
+Name: {{from_name}}
+Email: {{from_email}}
+Message: 
+{{message}}
+
+This message was sent from your portfolio website.
+---
+
+Variables to include:
+- from_name (matches your name input field)
+- from_email (matches your email input field) 
+- message (matches your message textarea)
+
+Template Type: Dynamic

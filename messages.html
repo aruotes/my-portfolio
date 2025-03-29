@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen" style="background-color: #111827; color: white;">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Admin Panel</h1>
+        
+        <div id="login-form" class="max-w-md mx-auto bg-gray-800 p-6 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Login</h2>
+            <div class="mb-4">
+                <label class="block mb-2">Username</label>
+                <input type="text" id="username" class="w-full px-3 py-2 bg-gray-700 rounded">
+            </div>
+            <div class="mb-4">
+                <label class="block mb-2">Password</label>
+                <input type="password" id="password" class="w-full px-3 py-2 bg-gray-700 rounded">
+            </div>
+            <button onclick="login()" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded">Login</button>
+        </div>
+
+        <div id="message-panel" class="max-w-md mx-auto bg-gray-800 p-6 rounded-lg hidden mt-8">
+            <h2 class="text-xl font-semibold mb-4">Content Management</h2>
+            
+            <div class="mb-4">
+                <label class="block mb-2">Content Type:</label>
+                <select id="post-type" class="w-full px-3 py-2 bg-gray-700 rounded">
+                    <option value="main">Main Message Board</option>
+                    <option value="poetry">Poetry Section</option>
+                </select>
+            </div>
+
+            <div id="title-field" class="mb-4 hidden">
+                <label class="block mb-2">Title:</label>
+                <input type="text" id="message-title" class="w-full px-3 py-2 bg-gray-700 rounded">
+            </div>
+
+            <div class="mb-4">
+                <label class="block mb-2">Content:</label>
+                <textarea id="message-content" class="w-full px-3 py-2 bg-gray-700 rounded h-32"></textarea>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                <button onclick="updateMessage()" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded flex-1">
+                    <i class="fas fa-save mr-2"></i>Save
+                </button>
+                <button onclick="deleteMessages()" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded flex-1">
+                    <i class="fas fa-trash mr-2"></i>Clear All
+                </button>
+                <button onclick="logout()" class="bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded flex-1">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                </button>
+            </div>
+
+            <div id="poetry-list" class="mt-6 hidden">
+                <h3 class="text-lg font-semibold mb-2">Existing Poetry:</h3>
+                <div id="poetry-items" class="space-y-2 max-h-60 overflow-y-auto"></div>
+            </div>
+        </div>
+
+        <script>
+            // Show/hide fields based on content type
+            document.getElementById('post-type').addEventListener('change', function() {
+                const type = this.value;
+                const titleField = document.getElementById('title-field');
+                const poetryList = document.getElementById('poetry-list');
+
+                if (type === 'poetry') {
+                    titleField.classList.remove('hidden');
+                    poetryList.classList.remove('hidden');
+                    loadPoetryItems();
+                } else {
+                    titleField.classList.add('hidden');
+                    poetryList.classList.add('hidden');
+                }
+            });
+
+            function loadPoetryItems() {
+                const container = document.getElementById('poetry-items');
+                const poetryItems = JSON.parse(localStorage.getItem('poetryItems') || '[]');
+                
+                container.innerHTML = poetryItems.map((item, index) => `
+                    <div class="bg-gray-700 p-3 rounded-lg relative group">
+                        <h4 class="font-medium">${item.title}</h4>
+                        <p class="text-sm text-gray-300">${item.content}</p>
+                        <p class="text-xs text-gray-500 mt-1">
+                            ${new Date(item.date).toLocaleString()}
+                        </p>
+                        <button onclick="if(confirm('Delete this poem permanently?')) deletePoetryItem(${index})" 
+                                class="absolute top-2 right-2 text-red-400 opacity-0 group-hover:opacity-100 transition">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+        </script>
+    </div>
+
+    <!-- Include crypto polyfill for older browsers -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/1.3.1/forge.min.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>
